@@ -16,7 +16,7 @@ export interface User {
 }
 
 // export interface File {
-    
+//   fileId:number; 
 //   fromId: number;
 //   toId: number;
 //   content:string;
@@ -54,7 +54,7 @@ export class ChattingService {
   messageListBehavior: BehaviorSubject<any>;
   groupList: Group[] = [];
   groupListBehaviour: BehaviorSubject<any>;
- // fileListBehavior: BehaviorSubject<any>;
+//  fileListBehavior: BehaviorSubject<any>;
   private fromId: number;
 
   constructor(private http: HttpClient) {
@@ -70,6 +70,7 @@ export class ChattingService {
   connect(user: User) {
     this.fromId = user.userId;
     const topic = '/message/' + user.userId;
+    const topic1= '/message/file' + user.userId;
     console.log('connecting ...');
     const ws = new SockJS(this.webSocketEndpoint);
     this.stompClient = Stomp.over(ws);
@@ -86,6 +87,12 @@ export class ChattingService {
             this.messageList = this.messageList.concat(JSON.parse(data.body));
             this.messageListBehavior.next(this.messageList);
         });
+
+
+      //   _this.stompClient.subscribe(topic1, (data) => {
+      //     this.fileList = this.fileList.concat(JSON.parse(data.body));
+      //     this.fileListBehavior.next(this.fileList);
+      // });
 
         _this.stompClient.subscribe('/message/groupList/' + user.userId, (data) => {
             this.groupList = (JSON.parse(data.body));
@@ -124,7 +131,7 @@ export class ChattingService {
 
   // sendFile(value: any) {
   //   const file: File = {
-      
+  //     fileId: new Date().valueOf(),
   //     fromId : this.fromId,
   //     toId : value.toId,
   //     content : value.content,
@@ -133,7 +140,7 @@ export class ChattingService {
   //   }
   //   this.fileList.push(file);
   //   this.fileListBehavior.next(this.fileList);
-  //   this.stompClient.send('/app/chat.sendMessage/' + this.fromId + '/' + value.toId, {}, JSON.stringify(file));
+  //   this.stompClient.send('/app/chat.sendFile/' + this.fromId + '/' + value.toId, {}, JSON.stringify(file));
   // }
 
   createGroup(groupName: string) {
@@ -166,7 +173,7 @@ export class ChattingService {
 
   // sendGroupFile(value: any) {
   //   const file: File = {
-      
+  //     fileId: new Date().valueOf(),
   //     fromId : this.fromId,
   //     toId : value.toId,
   //     content : value.content,
@@ -175,7 +182,7 @@ export class ChattingService {
   //   }
   //   this.fileList.push(file);
   //   this.fileListBehavior.next(this.fileList);
-  //   this.stompClient.send('/app/chat.groupMessage/'  + value.toId, {}, JSON.stringify(file));
+  //   this.stompClient.send('/app/chat.groupFile/'  + value.toId, {}, JSON.stringify(file));
   // }
 
   showMessages(id: number) {
@@ -187,11 +194,26 @@ export class ChattingService {
     }));
   }
 
+  // showFiles(id: number) {
+  //   this.fileListBehavior.next(this.fileList.filter((data: File) => {
+  //     if ((data.toId === id && data.fromId === this.fromId) ||
+  //         (data.toId === this.fromId && data.fromId === id)) {
+  //       return true;
+  //     }
+  //   }));
+  // }
+
   showGroupMessages(id: number) {
     this.messageListBehavior.next(this.messageList.filter( (data: Message) => {
       if (data.toId === id ) { return true; }
     }));
   }
+
+  // showGroupFiles(id: number) {
+  //   this.fileListBehavior.next(this.fileList.filter( (data: File) => {
+  //     if (data.toId === id ) { return true; }
+  //   }));
+  // }
 
   getUsersOfGroup(groupId: number): Observable<number[]> {
      return  this.http.get<number[]>('http://localhost:8080/usersList/' +  groupId);

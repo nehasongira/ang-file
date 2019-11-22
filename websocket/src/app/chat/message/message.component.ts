@@ -1,7 +1,9 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ChattingService, Message, User} from "../../chatting.service";
+//import { Links } from './links';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-message',
@@ -17,6 +19,8 @@ export class MessageComponent implements OnInit {
   // private fileName:string;
  
   private messages: Message[] = [];
+ // private files: File[] = [];
+  //links: Links[] = [];
   private content;
   private userSelected: boolean;
   private selectedUser: number;
@@ -24,7 +28,7 @@ export class MessageComponent implements OnInit {
   @Input() data: { userSelected: boolean; selectedUser: number };
 
 
-  constructor(private chatService: ChattingService) {
+  constructor(private chatService: ChattingService,private sanitizer: DomSanitizer) {
     console.log(this.data);
   }
 
@@ -36,6 +40,34 @@ export class MessageComponent implements OnInit {
     this.chatService.messageListBehavior.subscribe( (data) => {
       this.messages = data;
     });
+
+    // this.chatService.fileListBehavior.subscribe( (data) => {
+    //   this.files = data;
+    //   var basestring=this.files.content;
+    //   var exten=this.files.ext1;
+    //   var name=this.files.fileName1;
+    //   console.log(name);
+  
+    //   console.log("whyyyy");
+
+    //  var binary = atob(basestring.replace(/\s/g, ''));
+    //   var len = binary.length;
+    //   var buffer = new ArrayBuffer(len);
+    //   var view = new Uint8Array(buffer);
+    //   for (var i = 0; i < len; i++) {
+    //     view[i] = binary.charCodeAt(i);
+    //   }
+    //   var blob = new Blob([view],{type: exten || 'application/octet-stream'});
+    //   console.log(blob.size);
+    //   console.log(blob.type);
+    //   var download = document.querySelector("a[ download ]");
+    //   var downloadUrl = URL.createObjectURL(blob);
+    //   console.log(downloadUrl);
+    //    this.links.push({ links: this.sanitizer.bypassSecurityTrustUrl(downloadUrl) });
+    // } 
+      
+
+    // });
   }
   
   // handleFileSelect(evt) {
@@ -67,8 +99,8 @@ export class MessageComponent implements OnInit {
   //       fileName1:this.fileName,
   //       ext1:this.ext
   //     };
-  //     this.chatService.sendMessage(value);
-  //     this.chatService.showMessages(this.selectedUser);
+  //     this.chatService.sendFile(value);
+  //     this.chatService.showFiles(this.selectedUser);
   //   } else {
   //     value = {
   //       toId : this.selectedUser,
@@ -76,8 +108,8 @@ export class MessageComponent implements OnInit {
   //       fileName1:this.fileName,
   //       ext1:this.ext
   //     };
-  //     this.chatService.sendGroupMessage(value);
-  //     this.chatService.showGroupMessages(this.selectedUser);
+  //     this.chatService.sendGroupFile(value);
+  //     this.chatService.showGroupFiles(this.selectedUser);
   //   }
   // }
 

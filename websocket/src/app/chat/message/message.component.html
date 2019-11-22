@@ -18,11 +18,20 @@
             <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
         </div>
     </div>
+</div>
 
-    <!-- <div class="send-button">
+<!-- <div class="send-button">
      <button class="send" (click)="sendFile()">send</button>
      <input #input type="file" id="files" name="files" (change)="handleFileSelect($event)" /><br/>
   </div> -->
 
-
-</div>
+<!-- <mat-sidenav-container>
+    <p style="float: right"><button mat-button (click)="sidenav.toggle()">file</button></p>
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" position="end" style="width: 20%">
+    <p>Sidenav content</p>
+        <p *ngFor="let link of links">
+           
+            <a id="link" target='_blank' download [href]="link.links"> <button id="btn1" class="btn" onclick="myFunction(this)">{{this.name}}</button> </a>
+        </p>
+    </mat-sidenav>
+  </mat-sidenav-container> -->
