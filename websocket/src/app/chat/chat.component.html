@@ -1,0 +1,45 @@
+<div>
+    <!--  <h3 class="text-center">{{loggedInUser.firstName}}</h3>-->
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Recent</h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" placeholder="Search">
+                            <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span></div>
+                    </div>
+                </div>
+
+                <div class="inbox_chat">
+                    <h4>UserList</h4>
+                    <div class="chat_list" *ngFor="let user of userList" (click)="showMessages(user)">
+                        <div class="chat_people">
+                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
+                            <div class="chat_ib">
+                                <h5>{{user.firstName}}<span class="chat_date">Dec 25</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Groups <button class="btn btn-primary" (click)="openDialog()">Create Group</button> </h4>
+                    <div class="chat_list" *ngFor="let group of groupList">
+                        <div class="chat_people" (click)="showGroupMessages(group)">
+                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
+                            <div class="chat_ib">
+                                <h5>{{group.groupName}}<span class="chat_date"><button [class.d-none] = "!group.creator" (click)="openDialog2(group)">Invite</button></span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>{{selectedUser}}</h4>
+            <div #messageComponent></div>
+            <!--      <router-outlet></router-outlet>-->
+        </div>
+    </div>
+</div>

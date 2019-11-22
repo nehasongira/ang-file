@@ -1,0 +1,10 @@
+<form #userForm="ngForm" (ngSubmit)="login(userForm.value)">
+  <div class="from-group">
+    <label for="userName">Select your username</label>
+    <select ngModel name="userName" id="userName" class="form-control">
+      <option *ngFor="let user of userList" [value]="user.firstName"> {{user.firstName}}</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary mt-3">Login</button>
+</form>
+

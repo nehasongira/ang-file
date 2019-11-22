@@ -1,0 +1,28 @@
+<div class="mesgs">
+    <div class="msg_history">
+        <div *ngFor="let message of messages" [ngClass]="{'outgoing_msg': message.fromId == loggedInUser.userId , 'incoming_msg': message.fromId != loggedInUser.userId}">
+            <div class="incoming_msg_img" [class.d-none]="message.fromId == loggedInUser.userId">
+                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+            </div>
+            <div [ngClass]="{'sent_msg': message.fromId == loggedInUser.userId , 'received_msg' : message.fromId != loggedInUser.userId}">
+                <div [class.received_withd_msg]="message.fromId != loggedInUser.userId">
+                    <p>{{ message.content }}</p>
+                    <!-- <p>scfhgdbhj</p> -->
+                    <span class="time_date">{{message.dateTime}}</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="type_msg">
+        <div class="input_msg_write">
+            <input type="text" placeholder="enter your message" name="content" [(ngModel)]="content" class="form-control write_msg" id="content">
+            <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+    <!-- <div class="send-button">
+     <button class="send" (click)="sendFile()">send</button>
+     <input #input type="file" id="files" name="files" (change)="handleFileSelect($event)" /><br/>
+  </div> -->
+
+
+</div>
